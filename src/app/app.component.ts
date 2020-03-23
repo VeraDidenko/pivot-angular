@@ -47,6 +47,39 @@ export class AppComponent {
     }
   }
 
+  customizeToolbar(toolbar: Flexmonster.Toolbar): void {
+
+    // Get all tabs
+    var tabs = toolbar.getTabs();
+    var pivot = this.pivot.flexmonster;
+
+    toolbar.getTabs = function () {
+      let newTab = {
+        id: "fm-tab-newtab",
+        title: "New Tab",
+        handler: showInfo,
+        icon: toolbar.icons.open,
+        android: null,
+        args: null,
+        ios: null,
+        mobile: null,
+        menu: null
+      }
+      // Add new tab
+      tabs.unshift(newTab);
+      return tabs;
+    }
+
+    function showInfo() {
+      pivot.alert({
+        title: "Customizing Flexmonster",
+        message: "1) How to customize the Toolbar: <a style='text-decoration:underline; color:blue' href='https://www.flexmonster.com/doc/customizing-toolbar/'>see guide</a>",
+        type: "info",
+        blocking: false
+      });
+    }
+  }
+
   onReportComplete(): void {
     this.pivot.flexmonster.off('reportcomplete');
     this.pivot.flexmonster.setReport({
