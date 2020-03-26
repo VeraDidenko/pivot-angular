@@ -47,37 +47,34 @@ export class AppComponent {
     }
   }
 
+  showInfo(): void{
+    this.pivot.flexmonster.alert({
+      title: "Customizing Flexmonster",
+      message: "1) How to customize the Toolbar: <a style='text-decoration:underline; color:blue' href='https://www.flexmonster.com/doc/customizing-toolbar/'>see guide</a>",
+      type: "info",
+      blocking: false
+    });
+  }
+
   customizeToolbar(toolbar: Flexmonster.Toolbar): void {
 
     // Get all tabs
     var tabs = toolbar.getTabs();
-    var pivot = this.pivot.flexmonster;
+    // The reference to the handler method
+    var newTabHandler = this.showInfo.bind(this);
 
     toolbar.getTabs = function () {
       let newTab = {
         id: "fm-tab-newtab",
         title: "New Tab",
-        handler: showInfo,
-        icon: toolbar.icons.open,
-        android: null,
-        args: null,
-        ios: null,
-        mobile: null,
-        menu: null
+        handler: newTabHandler,
+        icon: toolbar.icons.open
       }
       // Add new tab
       tabs.unshift(newTab);
       return tabs;
     }
 
-    function showInfo() {
-      pivot.alert({
-        title: "Customizing Flexmonster",
-        message: "1) How to customize the Toolbar: <a style='text-decoration:underline; color:blue' href='https://www.flexmonster.com/doc/customizing-toolbar/'>see guide</a>",
-        type: "info",
-        blocking: false
-      });
-    }
   }
 
   onReportComplete(): void {
